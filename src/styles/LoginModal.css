@@ -1,0 +1,52 @@
+/* styles/LoginModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(15, 15, 15, 0.9));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+  backdrop-filter: blur(15px);
+}
+
+.modal-content {
+  position: relative;
+  background: #1a1a1a;
+  border-radius: 15px;
+  width: 100%;
+  height: 70vh;
+  max-width: 450px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 15px rgba(229, 9, 20, 0.3);
+  border: 1px solid #e50914;
+  animation: glow 2s infinite alternate;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #e50914;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.2) rotate(90deg);
+  color: #ff4d4d;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 10px rgba(229, 9, 20, 0.3);
+  }
+  to {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(229, 9, 20, 0.6);
+  }
+}

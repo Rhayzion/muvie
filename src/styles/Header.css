@@ -1,0 +1,142 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #0f0f0f;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 50px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo-placeholder {
+  width: 50px;
+  height: 50px;
+  background: #222;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+.loading-placeholder {
+  width: 40px;
+  height: 40px;
+  background: #222;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.user-section {
+  position: relative;
+}
+
+.user-avatar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e50914;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon {
+  color: #e50914;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.user-avatar-wrapper:hover .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 10px 0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  min-width: 180px;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  color: #fff;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: #e50914;
+  color: #fff;
+}
+
+.dropdown-item-icon {
+  font-size: 1.1rem;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 25px;
+  background: transparent;
+  border: 2px solid #e50914;
+  color: #e50914;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+
+.btn:hover {
+  background: #e50914;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}

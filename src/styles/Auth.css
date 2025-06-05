@@ -3,19 +3,19 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #0d0d0d; /* Deep black for a cinematic feel */
+  background: #0d0d0d; 
   padding: 20px;
 }
 
-.auth-box {
-  background: #1a1a1a; /* Slightly lighter black for contrast */
+/* .auth-box {
+  background: #1a1a1a;
   border-radius: 12px;
   padding: 40px;
   width: 100%;
   max-width: 400px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   color: #fff;
-}
+} */
 
 .auth-header {
   text-align: center;
