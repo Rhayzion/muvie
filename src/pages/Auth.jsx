@@ -1,3 +1,4 @@
+// Auth.js
 import { useState } from "react";
 import {
   createUserWithEmailAndPassword,
@@ -7,10 +8,10 @@ import {
   updateProfile,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useModal } from "../context/ModalContext"; // Add this
+import { useModal } from "../context/ModalContext";
 import { motion, AnimatePresence } from "framer-motion";
 import "../styles/Auth.css";
 
@@ -23,15 +24,15 @@ import { CgProfile } from "react-icons/cg";
 import { BiArrowBack } from "react-icons/bi";
 
 const errorMessages = {
-  "auth/email-already-in-use": "Email already in use. Try signing in.",
-  "auth/invalid-email": "Please enter a valid email.",
-  "auth/weak-password": "Password must be at least 6 characters.",
-  "auth/user-not-found": "No account found. Sign up first.",
-  "auth/wrong-password": "Incorrect password. Try again.",
-  "auth/too-many-requests": "Too many attempts. Try again later.",
-  "auth/network-request-failed": "Network error. Check your connection.",
-  "auth/popup-closed-by-user": "Google sign-in cancelled.",
-  "default": "An error occurred. Please try again.",
+  "auth/email-already-in-use": "This email is already in use. Try signing in instead.",
+  "auth/invalid-email": "Please enter a valid email address.",
+  "auth/weak-password": "Password must be at least 6 characters long.",
+  "auth/user-not-found": "No account found with this email. Please sign up.",
+  "auth/wrong-password": "Incorrect password. Please try again.",
+  "auth/too-many-requests": "Too many attempts. Please try again later.",
+  "auth/network-request-failed": "Network error. Check your internet connection.",
+  "auth/popup-closed-by-user": "Google sign-in was cancelled.",
+  "default": "An unexpected error occurred. Please try again.",
 };
 
 const generateUsername = (email) => {
@@ -56,7 +57,7 @@ const getInitials = (name, email) => {
 export default function Auth({ isModal = false }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { closeLoginModal } = useModal(); // Use modal context
+  const { closeLoginModal } = useModal();
   const [isSignup, setIsSignup] = useState(location.state?.fromHeader ? true : false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -102,15 +103,12 @@ export default function Auth({ isModal = false }) {
         await updateProfile(userCred.user, { displayName: username || null });
         await createUserProfile(userCred.user, "Email", username);
       } else {
-        const userCred = await signInWithEmailAndPassword(auth, email, password);
-        await createUserProfile(userCred.user, "Email", null);
+        await signInWithEmailAndPassword(auth, email, password);
       }
       if (isModal) {
-        closeLoginModal(); // Close modal on success
-      } else {
-        const from = location.state?.from || "/";
-        navigate(from);
+        closeLoginModal();
       }
+      navigate("/"); // Always redirect to homepage after success
     } catch (err) {
       setError(getFriendlyError(err.code));
     } finally {
@@ -120,16 +118,15 @@ export default function Auth({ isModal = false }) {
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
+    setError("");
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       await createUserProfile(result.user, "Google", null);
       if (isModal) {
-        closeLoginModal(); // Close modal on success
-      } else {
-        const from = location.state?.from || "/";
-        navigate(from);
+        closeLoginModal();
       }
+      navigate("/"); // Always redirect to homepage after success
     } catch (err) {
       setError(getFriendlyError(err.code));
     } finally {
@@ -139,6 +136,7 @@ export default function Auth({ isModal = false }) {
 
   const handleResetPassword = async () => {
     setLoading(true);
+    setResetMessage("");
     try {
       await sendPasswordResetEmail(auth, resetEmail);
       setResetMessage("Reset link sent! Check your inbox.");
@@ -351,7 +349,7 @@ export default function Auth({ isModal = false }) {
                 {loading ? <span className="auth-spinner"></span> : "Send Reset Link"}
               </motion.button>
 
-              {!isModal && ( // Hide "Back to Sign In" in modal mode
+              {!isModal && (
                 <motion.div
                   className="auth-switch-mode"
                   initial={{ opacity: 0 }}

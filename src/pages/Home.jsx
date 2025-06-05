@@ -1,81 +1,71 @@
-// MovieDetails.js
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+// Home.jsx
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useModal } from "../context/ModalContext"; // Add this
+import { useModal } from "../context/ModalContext";
 import { motion } from "framer-motion";
-import "../styles/MovieDetails.css";
+import "../styles/Home.css";
 
-// Dummy movie data fetch (replace with your API call)
-const fetchMovie = async (id) => {
-  return {
-    id,
-    title: "Venom: Let There Be Carnage",
-    rating: 4.1,
-    description:
-      "Eddie Brock is still struggling to coexist with the shape-shifting extraterrestrial Venom. When deranged serial killer Cletus Kasady also becomes host to an alien symbiote, Brock and Venom must put aside their differences to stop his reign of terror.",
-  };
-};
-
-const MovieDetails = () => {
-  const { id } = useParams();
+const Home = () => {
   const { user } = useAuth();
-  const { openLoginModal } = useModal(); // Use modal context
-  const [movie, setMovie] = useState(null);
+  const { openLoginModal } = useModal();
   const [likes, setLikes] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
 
-  useEffect(() => {
-    const loadMovie = async () => {
-      const movieData = await fetchMovie(id);
-      setMovie(movieData);
-    };
-    loadMovie();
-  }, [id]);
-
   const handleLike = () => {
     if (!user) {
-      openLoginModal(); // Open modal instead of redirecting
+      openLoginModal(); // Trigger login modal if not logged in
       return;
     }
     setLikes(hasLiked ? likes - 1 : likes + 1);
     setHasLiked(!hasLiked);
   };
 
-  if (!movie) {
-    return <div className="loading-spinner">Loading...</div>;
-  }
-
   return (
-    <div className="movie-details-container">
-      <motion.div
-        className="movie-details"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h1 className="movie-title">{movie.title}</h1>
-        <p className="movie-rating">Rating: {movie.rating} ★</p>
-        <p className="movie-description">{movie.description}</p>
-
-        {/* Like Button */}
-        <motion.button
-          className={`like-button ${hasLiked ? "liked" : ""}`}
-          onClick={handleLike}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+    <motion.div
+      className="home-container"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <div className="hero-section">
+        <motion.h1
+          className="hero-title"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
-          {user ? (
-            <>
-              {hasLiked ? "Unlike" : "Like"} ({likes})
-            </>
-          ) : (
-            "Login to Like"
-          )}
-        </motion.button>
-      </motion.div>
-    </div>
+          Welcome to Muvie
+        </motion.h1>
+        <motion.p
+          className="hero-subtitle"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          Discover the latest movies and shows. Sign up to unlock more features!
+        </motion.p>
+        <motion.div
+          className="action-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
+          <button
+            className={`like-button ${hasLiked ? "liked" : ""}`}
+            onClick={handleLike}
+          >
+            {user ? (
+              <>
+                {hasLiked ? "Unlike" : "Like"} ({likes})
+              </>
+            ) : (
+              "Login to Like"
+            )}
+          </button>
+        </motion.div>
+      </div>
+    </motion.div>
   );
 };
 
-export default MovieDetails;
+export default Home;

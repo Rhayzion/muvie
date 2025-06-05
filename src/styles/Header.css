@@ -1,13 +1,16 @@
+/* styles/Header.css */
 .main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  background: #0f0f0f;
+  padding: 20px 40px;
+  background: linear-gradient(90deg, #0d0d0d, #1a1a1a);
+  border-bottom: 2px solid #e50914;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  font-family: "Montserrat", sans-serif; /* Modern, elegant font */
 }
 
 .logo {
@@ -16,30 +19,74 @@
 }
 
 .logo-img {
-  height: 50px;
+  height: 60px;
   object-fit: contain;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .logo-placeholder {
-  width: 50px;
-  height: 50px;
-  background: #222;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, #222, #333);
   border-radius: 50%;
-  animation: pulse 1.5s infinite;
+  animation: pulse 1.8s infinite;
 }
 
 .loading-placeholder {
-  width: 40px;
-  height: 40px;
-  background: #222;
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(45deg, #222, #333);
   border-radius: 50%;
-  animation: pulse 1.5s infinite;
+  animation: pulse 1.8s infinite;
 }
 
 .nav {
   display: flex;
   align-items: center;
+  gap: 25px;
+}
+
+/* Search Styles */
+.search-container {
+  position: relative;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  overflow: hidden;
+  border: 1px solid #e50914;
+}
+
+.search-icon-btn {
+  background: none;
+  border: none;
+  color: #e50914;
+  padding: 10px;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.search-icon-btn:hover {
+  color: #ff4d4d;
+  transform: rotate(90deg);
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 1rem;
+  width: 100%;
+  outline: none;
+  transition: opacity 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: #aaa;
 }
 
 .user-section {
@@ -52,8 +99,9 @@
   gap: 10px;
   cursor: pointer;
   padding: 5px;
+  background: rgba(229, 9, 20, 0.1);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease;
 }
 
 .user-avatar {
@@ -62,7 +110,6 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #e50914;
-  transition: transform 0.3s ease;
 }
 
 .dropdown-icon {
@@ -79,11 +126,11 @@
   position: absolute;
   top: 60px;
   right: 0;
-  background: #1a1a1a;
-  border: 1px solid #333;
+  background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+  border: 1px solid #e50914;
   border-radius: 8px;
   padding: 10px 0;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
   min-width: 180px;
 }
 
@@ -99,12 +146,12 @@
   text-align: left;
   width: 100%;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .dropdown-item:hover {
   background: #e50914;
-  color: #fff;
+  transform: translateX(5px);
 }
 
 .dropdown-item-icon {
@@ -118,25 +165,67 @@
 
 .btn {
   padding: 10px 25px;
-  background: transparent;
-  border: 2px solid #e50914;
-  color: #e50914;
+  background: linear-gradient(45deg, #e50914, #ff4d4d);
+  border: none;
+  color: #fff;
   font-size: 1rem;
   font-weight: 600;
-  border-radius: 25px;
+  border-radius: 20px;
   text-decoration: none;
-  transition: all 0.4s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn:hover {
-  background: #e50914;
-  color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+  box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6);
 }
 
 @keyframes pulse {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
+  0% { opacity: 0.4; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.4; transform: scale(0.95); }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .main-header {
+    padding: 15px 20px;
+  }
+
+  .logo-img {
+    height: 45px;
+  }
+
+  .search-form {
+    width: 50px;
+  }
+
+  .search-form:hover,
+  .search-form:focus-within {
+    width: 200px;
+  }
+
+  .search-icon-btn {
+    padding: 8px;
+  }
+
+  .search-input {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .dropdown-menu {
+    top: 50px;
+    min-width: 150px;
+  }
+
+  .btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
 }
